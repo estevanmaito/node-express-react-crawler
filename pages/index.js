@@ -1,15 +1,18 @@
-import getNews from '../src/scraper.js'
-
-const news = getNews()
-
-const Index = () => (
+const Index = ({news}) => (
   <div>
     {
       news.map(n => (
-        <h1>n.title</h1>
+        <h1 key={n.title}>{n.title}</h1>
       ))
     }
   </div>
 )
+
+Index.getInitialProps = ({ req, query }) => {
+  const news = query.news
+  return {
+    news
+  }
+}
 
 export default Index
