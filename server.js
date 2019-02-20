@@ -7,24 +7,24 @@ const app = next({ dev })
 const handle = app.getRequestHandler()
 
 app.prepare()
-.then(() => {
-  const server = express()
+  .then(() => {
+    const server = express()
 
-  server.get('/', async (req, res) => {
-    const news =  await api.getNews()
-    app.render(req, res, '/index', { news })
-  })
+    server.get('/', async (req, res) => {
+      const news =  await api.getNews()
+      app.render(req, res, '/index', { news })
+    })
 
-  server.get('*', (req, res) => {
-    return handle(req,res)
-  })
+    server.get('*', (req, res) => {
+      return handle(req,res)
+    })
 
-  server.listen(3000, err => {
-    if (err) throw err
-    console.log('> Server ready at http://localhost:3000')
+    server.listen(3000, err => {
+      if (err) throw err
+      console.log('> Server ready at http://localhost:3000')
+    })
   })
-})
-.catch(err => {
-  console.error(err.stack)
-  process.exit(1)
-})
+  .catch(err => {
+    console.error(err.stack)
+    process.exit(1)
+  })
