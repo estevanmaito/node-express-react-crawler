@@ -5,22 +5,26 @@ const URL = 'https://gizmodo.uol.com.br'
 
 async function getNews() {
   return await rp(URL)
-    .then(function(body) {
-      let result = Array.from($('.list-item', body))
+    .then(fetchContentFromURL)
+    .catch(catchError)
 
-      let news = result.map(i => ({
-        title: $(i).find('.postTitle > a').text(),
-        description: $(i).find('.postSummary > p').text(),
-        date: $(i).find('.published').attr('title'),
-        image: $(i).find('.wp-post-image').attr('src'),
-        href: $(i).find('.postTitle > a').attr('href'),
-      }))
+  function fetchContentFromURL(body) {
+    let result = Array.from($('.list-item', body))
 
-      return news
-    })
-    .catch(function(err) {
-      console.log(err)
-    })
+    let news = result.map(i => ({
+      title: $(i).find('.postTitle > a').text(),
+      description: $(i).find('.postSummary > p').text(),
+      date: $(i).find('.published').attr('title'),
+      image: $(i).find('.wp-post-image').attr('src'),
+      href: $(i).find('.postTitle > a').attr('href'),
+    }))
+
+    return news
+  }
+
+  function catchError(err) {
+    console.error(err)
+  }
 }
 
 module.exports = { getNews }
