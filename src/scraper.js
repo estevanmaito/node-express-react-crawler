@@ -11,7 +11,6 @@ async function getNews() {
       let news = result.map(i => ({
         title: $(i).find('.postTitle > a').text(),
         description: $(i).find('.postSummary > p').text(),
-        author: $(i).find('.postMeta--author-author > a').text(),
         date: $(i).find('.published').attr('title'),
         image: $(i).find('.wp-post-image').attr('src'),
         href: $(i).find('.postTitle > a').attr('href'),
