@@ -1,14 +1,12 @@
-const rp = require('request-promise')
+const request = require('request-promise')
 const $ = require('cheerio')
 
-const URL = 'https://gizmodo.uol.com.br'
-
-async function getNews() {
-  return await rp(URL)
-    .then(fetchContentFromURL)
+async function getNews(url) {
+  return await request(url)
+    .then(parseContentFromURL)
     .catch(catchError)
 
-  function fetchContentFromURL(body) {
+  function parseContentFromURL(body) {
     let result = Array.from($('.list-item', body))
 
     let news = result.map(i => ({

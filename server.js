@@ -11,12 +11,13 @@ app.prepare()
     const server = express()
 
     server.get('/', async (req, res) => {
-      const news =  await api.getNews()
+      const URL = 'https://gizmodo.uol.com.br'
+      const news = await api.getNews(URL)
       app.render(req, res, '/index', { news })
     })
 
     server.get('*', (req, res) => {
-      return handle(req,res)
+      return handle(req, res)
     })
 
     server.listen(3000, err => {
